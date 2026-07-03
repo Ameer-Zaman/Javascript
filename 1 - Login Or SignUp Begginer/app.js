@@ -6,5 +6,5 @@ function login(){
         window.location.href = "home.html";
     } else {
         window.alert("Invalid Password!");
-    }
+    } 
 }
