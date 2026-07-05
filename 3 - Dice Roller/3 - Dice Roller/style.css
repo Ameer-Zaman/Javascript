@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.dice-roller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.image-container {
+    margin-top: 100px;
+}
+
+.image-container img{
+    width: 250px;
+}
+
+#img {
+    width: 250px;
+    transition: transform 0.3s;
+}
+
+.roll {
+    animation: rollDice 0.5s;
+}
+
+@keyframes rollDice {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+button {
+    padding: 15px;
+    width: 150px;
+    background-color: antiquewhite;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
