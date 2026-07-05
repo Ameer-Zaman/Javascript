@@ -18,28 +18,23 @@ body {
     width: 250px;
 }
 
-@keyframes rolling {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-
-    25% {
-        transform: rotate(90deg) scale(1.2);
-    }
-
-    50% {
-        transform: rotate(180deg) scale(0.9);
-    }
-
-    75% {
-        transform: rotate(270deg) scale(1.2);
-    }
-
-    100% {
-        transform: rotate(360deg) scale(1);
-    }
+#img {
+    width: 250px;
+    transition: transform 0.3s;
 }
 
+.roll {
+    animation: rollDice 0.5s;
+}
+
+@keyframes rollDice {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 button {
     padding: 15px;
