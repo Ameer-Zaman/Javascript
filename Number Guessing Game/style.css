@@ -1,0 +1,874 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* =========================
+   1. VARIABLES & RESET
+========================= */
+
+:root {
+    --bg: #080914;
+    --surface: #111326;
+    --surface-light: #171a32;
+    --border: #302454;
+
+    --purple: #8b35ff;
+    --purple-light: #b35cff;
+
+    --text: #f5f3ff;
+    --muted: #9998bd;
+
+    --green: #23d9a0;
+    --red: #ff4f86;
+    --gold: #ffc84a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    padding: 0 24px;
+    overflow-x: hidden;
+
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+
+    background:
+        radial-gradient(ellipse at 60% 0%,
+            #21103e 0%,
+            transparent 43%),
+        radial-gradient(ellipse at 0% 100%,
+            #17102c 0%,
+            transparent 35%),
+        var(--bg);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.985);
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--purple-light);
+    outline-offset: 3px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+/* =========================
+   2. GOOGLE MATERIAL ICONS
+========================= */
+
+i {
+    font-style: normal;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+    direction: ltr;
+
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   3. MAIN LAYOUT
+========================= */
+
+main {
+    width: min(895px, 100%);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 100px 0 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/*
+   The history popup is position: fixed.
+   The main grid therefore remains the game layout.
+*/
+
+/* =========================
+   4. HEADER
+========================= */
+
+header {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.title {
+    font-size: clamp(2rem, 3.1vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -1.8px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+#title {
+    background: linear-gradient(100deg,
+            #a76bff,
+            #d448ff);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Subtitle without adding extra HTML */
+
+header::after {
+    content: "Guess the secret number between 1 and 100!";
+
+    display: block;
+    margin-top: 12px;
+
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* =========================
+   5. STATISTICS CARDS
+========================= */
+
+.statics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+
+    padding: 28px 20px;
+    margin-bottom: 24px;
+
+    background: rgba(17, 19, 38, 0.88);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+.statics>div {
+    min-width: 0;
+    min-height: 84px;
+    padding: 8px 16px;
+
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+
+    align-content: center;
+    align-items: center;
+    column-gap: 12px;
+}
+
+/* Vertical separators between statistics */
+
+.statics>div+div {
+    border-left: 1px solid var(--border);
+}
+
+/* Icon circles */
+
+.statics>div .icon,
+.statics>div>i {
+    grid-column: 1;
+    grid-row: 1 / 3;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--purple-light);
+    background: #30205e;
+    border-radius: 50%;
+}
+
+.attempts>i {
+    color: #d45cff;
+    background: #421b56;
+}
+
+.best-score>i {
+    color: var(--gold);
+    background: #45351d;
+}
+
+/* Statistics labels */
+
+.statics>div p {
+    grid-column: 2;
+    grid-row: 1;
+
+    margin-bottom: 5px;
+
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+/* Statistics values */
+
+.statics .stats {
+    grid-column: 2;
+    grid-row: 2;
+
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* =========================
+   6. GUESS INPUT PANEL
+========================= */
+
+.container {
+    padding: 34px;
+
+    background: rgba(17, 19, 38, 0.88);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+/* Input and Guess button */
+
+.input-button {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+}
+
+#numberInput {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    padding: 19px 24px;
+
+    color: var(--text);
+    background: var(--surface-light);
+
+    border: 1px solid #55418a;
+    border-radius: 12px;
+
+    font-size: 1.05rem;
+
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#numberInput::placeholder {
+    color: #8584a9;
+}
+
+#numberInput:focus {
+    border-color: var(--purple-light);
+    box-shadow: 0 0 0 3px #8b35ff22;
+    outline: none;
+}
+
+/* Remove number input arrows */
+
+#numberInput::-webkit-inner-spin-button,
+#numberInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Guess button */
+
+#submitBtn {
+    min-width: 248px;
+    padding: 16px 28px;
+
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+
+    border: 1px solid #a34bff;
+    border-radius: 12px;
+
+    background: linear-gradient(110deg,
+            #b02cff,
+            #681aff);
+
+    box-shadow: 0 5px 22px #8b35ff30;
+}
+
+#submitBtn:hover {
+    background: linear-gradient(110deg,
+            #c04bff,
+            #792fff);
+
+    box-shadow: 0 5px 28px #8b35ff60;
+}
+
+#submitBtn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+/* =========================
+   7. HISTORY & NEW GAME BUTTONS
+========================= */
+
+.history-action {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.history-action button {
+    min-height: 48px;
+    padding: 11px 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    color: var(--text);
+    background: transparent;
+
+    border: 1px solid #55418a;
+    border-radius: 10px;
+}
+
+.history-action button:hover {
+    border-color: var(--purple-light);
+    background: #211735;
+}
+
+.history-action .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* =========================
+   8. FEEDBACK MESSAGE
+========================= */
+
+.feedback {
+    margin-top: 24px;
+}
+
+.feedback-container {
+    min-height: 118px;
+    padding: 20px 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    background: #121326;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+/* Feedback icon */
+
+.feedback-container>i {
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--muted);
+    background: #292944;
+    border-radius: 50%;
+}
+
+/* Feedback heading */
+
+.feedback-container h5 {
+    margin-bottom: 5px;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Feedback description */
+
+.feedback-container p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Optional states for JavaScript */
+
+.feedback-container.success {
+    border-color: #146d57;
+    background: #0d211f;
+}
+
+.feedback-container.success>i {
+    color: var(--green);
+    background: #123e35;
+}
+
+.feedback-container.error {
+    border-color: #71304b;
+}
+
+.feedback-container.error>i {
+    color: var(--red);
+    background: #482036;
+}
+
+/* =========================
+   9. HISTORY POPUP
+========================= */
+
+/* Dark overlay behind popup */
+
+/* Center the popup on the screen */
+.history {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(4, 4, 14, 0.75);
+    backdrop-filter: blur(8px);
+}
+
+.history.open {
+    display: flex;
+}
+
+/* Popup box */
+.history-container {
+    width: min(500px, 100%);
+    max-height: 80vh;
+    overflow-y: auto;
+
+    padding: 24px;
+    background: #111326;
+    border: 1px solid #302454;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Stack history entries vertically */
+.history-tiles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Individual history card */
+
+
+.history-tile {
+    width: 100%;
+    min-height: 64px;
+    padding: 18px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    color: var(--text);
+    background: var(--surface-light);
+    border: 1px solid #2a2949;
+    border-radius: 12px;
+
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+.history-tile:hover {
+    background: #211735;
+    border-color: #8b35ff;
+}
+
+/* Popup animation */
+
+@keyframes popup-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Popup header */
+
+.top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-bottom: 18px;
+    margin-bottom: 12px;
+
+    border-bottom: 1px solid #282542;
+}
+
+.top>i {
+    color: var(--purple-light);
+}
+
+.top h3 {
+    flex: 1;
+
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+/* Close button */
+
+.top button {
+    flex: 0 0 36px;
+
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--muted);
+    background: transparent;
+
+    border: none;
+    border-radius: 8px;
+}
+
+.top button:hover {
+    color: white;
+    background: #29213e;
+}
+
+/* History list */
+
+.history-tiles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Individual history row */
+
+.history-tile {
+    min-height: 72px;
+    padding: 18px 16px;
+
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: 12px;
+
+    background: var(--surface-light);
+    border: 1px solid #2a2949;
+    border-radius: 12px;
+}
+
+.guess-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.guess-result {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.guess-index {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.too-low {
+    color: var(--purple-light);
+}
+
+.too-high {
+    color: var(--red);
+}
+
+.correct {
+    color: var(--green);
+}
+
+/* Empty history message */
+
+.empty-history {
+    padding: 24px 12px;
+
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* =========================
+   10. TABLET LAYOUT
+========================= */
+
+@media (max-width: 1200px) {
+    main {
+        gap: 28px;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+    }
+
+    .title {
+        font-size: clamp(1.9rem, 3vw, 2.8rem);
+        white-space: normal;
+    }
+
+    .statics {
+        padding: 20px 12px;
+    }
+
+    .statics>div {
+        padding: 8px;
+        column-gap: 8px;
+        grid-template-columns: 40px minmax(0, 1fr);
+    }
+
+    .statics>div .icon,
+    .statics>div>i {
+        width: 40px;
+        height: 40px;
+    }
+
+    .statics .stats {
+        font-size: 1.35rem;
+    }
+
+    .container {
+        padding: 24px;
+    }
+
+    #submitBtn {
+        min-width: 150px;
+    }
+}
+
+/* =========================
+   11. SMALLER SCREENS
+========================= */
+
+@media (max-width: 900px) {
+    main {
+        display: block;
+        width: min(895px, 100%);
+        padding-top: 52px;
+    }
+
+    .history-container {
+        width: min(432px, 100%);
+    }
+}
+
+/* =========================
+   12. MOBILE
+========================= */
+
+@media (max-width: 650px) {
+    body {
+        padding: 0 16px;
+    }
+
+    main {
+        padding-top: 36px;
+    }
+
+    header {
+        margin-bottom: 26px;
+    }
+
+    .title {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+        letter-spacing: -1px;
+        white-space: normal;
+    }
+
+    header::after {
+        font-size: 0.95rem;
+    }
+
+    /* Stack the statistics vertically */
+
+    .statics {
+        grid-template-columns: 1fr;
+        padding: 12px 18px;
+    }
+
+    .statics>div {
+        min-height: 78px;
+        padding: 12px 4px;
+    }
+
+    .statics>div+div {
+        border-left: none;
+        border-top: 1px solid var(--border);
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+    .input-button {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #numberInput {
+        padding: 17px;
+    }
+
+    #submitBtn {
+        width: 100%;
+        min-width: 0;
+        min-height: 52px;
+    }
+
+    .feedback-container {
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .feedback-container>i {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .history-action {
+        margin-top: 20px;
+    }
+
+    .history-action button {
+        flex: 1;
+        padding: 11px 8px;
+    }
+
+    .history-container {
+        padding: 18px;
+    }
+
+    .history-tile {
+        grid-template-columns: 42px 1fr auto;
+        padding: 15px 12px;
+        gap: 8px;
+    }
+}
+
+/* =========================
+   13. VERY SMALL SCREENS
+========================= */
+
+@media (max-width: 380px) {
+    body {
+        padding: 0 12px;
+    }
+
+    main {
+        padding-top: 28px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .container {
+        padding: 14px;
+    }
+
+    .history-action {
+        flex-direction: column;
+    }
+
+    .history-action button {
+        width: 100%;
+    }
+
+    .history-tile {
+        grid-template-columns: 36px 1fr auto;
+        font-size: 0.85rem;
+    }
+}
+
+/* =========================
+   14. ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

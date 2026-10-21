@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Number Guessing Game</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <main>
+
+    <!-- Header -->
+    <header>
+      <h1 class="title">
+        Number <span id="title">Guessing Game</span>
+      </h1>
+    </header>
+
+    <!-- Statistics -->
+    <section class="statics">
+
+      <div class="range">
+        <div class="icon">
+          <i class="material-symbols-outlined">target</i>
+        </div>
+
+        <p>Range</p>
+        <h2 class="stats">1 - 100</h2>
+      </div>
+
+      <div class="attempts">
+        <i class="material-symbols-outlined">bar_chart</i>
+
+        <p>Attempts</p>
+        <h2 class="stats">
+          <span id="attempts">0</span>
+        </h2>
+      </div>
+
+      <div class="best-score">
+        <i class="material-symbols-outlined">emoji_events</i>
+
+        <p>Best Score</p>
+        <h2 class="stats">
+          <span id="best-score"></span>
+        </h2>
+      </div>
+
+    </section>
+
+    <!-- Guess Input -->
+    <section class="container">
+
+      <form class="input-button" id="guessForm">
+        <input type="number" id="numberInput" min="1" max="100" step="1" placeholder="Enter a number (1 - 100)"
+          aria-label="Enter your guess" required>
+
+        <button type="submit" id="submitBtn">
+          Guess
+        </button>
+      </form>
+
+      <div class="history-action">
+        <button type="button" id="historyBtn">
+          <i class="material-symbols-outlined">history</i>
+          History
+        </button>
+
+        <button type="button" id="newGameBtn">
+          <i class="material-symbols-outlined">refresh</i>
+          New Game
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Feedback -->
+    <section class="feedback">
+      <div class="feedback-container">
+
+        <i class="material-symbols-outlined">lightbulb</i>
+
+        <div>
+          <h5 id="feedbackTitle">Start guessing!</h5>
+          <p id="feedbackMessage">
+            Enter a number between 1 and 100 and click Guess.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Guess History Popup -->
+    <section class="history" id="historyPopup" aria-hidden="true">
+
+      <div class="history-container" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+
+        <div class="top">
+          <i class="material-symbols-outlined">history</i>
+
+          <h3 id="historyTitle">Guess History</h3>
+
+          <button type="button" id="closeHistoryBtn">
+            <i class="material-symbols-outlined">close</i>
+          </button>
+        </div>
+
+        <div class="history-tiles" id="historyTiles">
+          <p class="empty-history">Your guesses will appear here.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</body>
+
+</html>
